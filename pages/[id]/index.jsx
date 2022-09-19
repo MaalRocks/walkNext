@@ -5,6 +5,8 @@ import Card from "../../components/Card"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import Navbar from "../../components/Navbar"
+import Player from "../../components/Player"
+import Enemy from "../../components/Enemy"
 
 // Inizialisiere Componente und definiere welche Parameter diese annimmt
 // Argumente kommen aus der getServerSideProps()
@@ -12,31 +14,51 @@ const Dashboard = () => {
 	const router = useRouter()
 	// Definiere States
 	// goals-State der mit dem Wert aus goalsDB initialisiert wird
-	const [goals, setGoals] = useState([])
+	const [player, setPlayer] = useState({})
+	const [enemies, setEnemies] = useState([])
+	const [target, setTarget] = useState("")
+	const [battleLog, setBattleLog] = useState([])
 
 	//message
 	const [message, setMessage] = useState()
 
 	// useEffect Hook wird instanziert
 	useEffect(() => {
-		const userIdFromLocalStorage = localStorage.getItem("userId")
-		const getGoalsByUserID = async (userId) => {
+		const getPlayer = async () => {
 			try {
-				const res = await fetch(`/api/goals/byUserId/${userId}`)
+				const res = await fetch(`/api/player/`)
 
 				if (!res.ok) {
 					throw new Error(res.status)
 				}
 
 				const { data } = await res.json()
-				setGoals(data)
+
+				setPlayer(data[0])
 			} catch (error) {
-				setMessage("Failed to add goal")
+				setMessage("Failed to get player")
 			}
 		}
 
-		getGoalsByUserID(userIdFromLocalStorage)
-	}, [])
+		const getEnemies = async () => {
+			try {
+				const res = await fetch(`/api/enemies/`)
+
+				if (!res.ok) {
+					throw new Error(res.status)
+				}
+
+				const { data } = await res.json()
+
+				setEnemies(data)
+			} catch (error) {
+				setMessage("Failed to get Enemy")
+			}
+		}
+
+		getPlayer()
+		getEnemies()
+	}, [target])
 
 	// const changeBgColor = (e) => {
 	// 	const target = e.target
@@ -51,18 +73,6 @@ const Dashboard = () => {
 	// }
 
 	// Definiere handleChange Funktion
-	const handleChange = (e) => {
-		// Definiere eine Variable die als Inhalt den Auslöser des events hat
-		const target = e.target
-
-		console.log("target: ", target.id)
-		console.log("targetChecked1: ", target.checked)
-
-		console.log("isChecked :", isChecked)
-		console.log("id :", _id)
-
-		console.log("targetChecked2: ", target.checked)
-	}
 
 	// Deletehandler wird definiert
 	const handleDelete = async (event) => {
@@ -86,6 +96,28 @@ const Dashboard = () => {
 		}
 	}
 
+	const handleClick = (event) => {
+		const target = event.target
+		const enemyId = target.id
+
+		setTarget(enemyId)
+	}
+
+	// Ich sollte eventuell das ganze enemyObject in target packen
+	// state ist getter/setter
+	// click auf target -> target wird gesetted
+	// click auf attack -> attacke wird ausgeführt
+	// attacke besteht aus:
+	//	errechnen des schadens
+	// 	set den schaden
+
+	const handleAttack = () => {
+		setBattleLog(`attack ${target}!`)
+
+		// hier muss ich an den attack-wert von player kommen
+		// und an den def- und lp-wert von target
+	}
+
 	// Render HTML mit JSX Werten
 	return (
 		<>
@@ -94,33 +126,66 @@ const Dashboard = () => {
 				<title>Dashboard</title>
 			</Head>
 
+			<div className="text-white">currentTarget: {target}</div>
+			<div className="text-white">target string: {battleLog}</div>
+
 			{/* Main Block - Hauptinhalt der Seite */}
 			<div className="flex h-screen w-full flex-col">
-				{/* Componente: logout anhand von userData */}
-				{/* <Navbar data={user} /> */}
-
-				{/* 
-					Hier durch das goals array loopen und for 
-					jeden eintrag eine Card generieren 
-				*/}
-				<div className="flex h-full flex-wrap items-center justify-evenly">
-					{goals.map((goal, index) => (
-						// Wenn ja dann stelle das goals als Card da
-						<Card
+				<div className="flex h-full flex-col flex-wrap items-center justify-evenly">
+					{enemies.map((enemy, index) => (
+						<Enemy
 							key={index}
-							avatarImageUrl={goal.avatarImageUrl}
-							title={goal.title}
-							description={goal.description}
-							category={goal.category}
-							comments={goal.comments}
-							isChecked={goal.isChecked}
-							status={goal.status}
-							userID={goal.user}
-							contentID={goal._id}
-							onChange={handleChange}
-							onClick={handleDelete}
+							enemyId={enemy.name}
+							enemy={enemy}
+							onClick={handleClick}
 						/>
 					))}
+
+					<div className="bg-gray-500 bg-opacity-30 p-2">
+						<Player player={player} />
+
+						<div className="m-2">
+							<button
+								className="
+								m-1 
+								bg-white
+								p-1
+								text-black
+								hover:bg-gray-700
+								hover:text-gray-300
+							   "
+								onClick={handleAttack}
+							>
+								angriff
+							</button>
+
+							<button
+								className="
+								m-1 
+								bg-white
+								p-1
+								text-black
+								hover:bg-gray-700
+								hover:text-gray-300
+							   "
+							>
+								verteidigen
+							</button>
+
+							<button
+								className="
+								m-1 
+								bg-white
+								p-1
+								text-black
+								hover:bg-gray-700
+								hover:text-gray-300
+							   "
+							>
+								fliehen
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</>

@@ -7,10 +7,11 @@ const Layout = ({ children }) => {
 				flex-col 
 				items-center 
 				justify-center
-				bg-[url('/banana.jpg')]
-				bg-cover bg-clip-padding
-				bg-center 
-				bg-origin-border
+				bg-black
+				bg-cover
+				bg-clip-padding bg-center
+				bg-origin-border 
+				text-white
 				"
 		>
 			{children}
