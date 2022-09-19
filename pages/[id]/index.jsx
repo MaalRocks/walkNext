@@ -114,6 +114,9 @@ const Dashboard = () => {
 	const handleAttack = () => {
 		setBattleLog(`attack ${target}!`)
 
+		console.log("player attack: ", player.strength)
+		console.log("enemy def: ", target)
+
 		// hier muss ich an den attack-wert von player kommen
 		// und an den def- und lp-wert von target
 	}
