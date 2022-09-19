@@ -1,0 +1,34 @@
+Was ist was?
+MongoDB:
+Dient als nicht relationale Datenbank
+
+MongoDB Atlas:
+[Ist das Datenbankmanagment-Tool das per Website zu erreichen ist](https://www.mongodb.com/de-de/atlas/database)
+
+Mongoose:
+JavaScript-Bibliothek, mit der Schemata mit stark typisierten Daten definieren werden. 
+Erst ein Schema definieren dann mit Mongoose ein Modell basierend auf einem bestimmten Schema erstellen.
+Ein Mongoose-Modell wird dann über die Schemadefinition des Modells einem MongoDB-Dokument zugeordnet.
+
+NextJS:
+Hybrid JavaScript Framework ( hybrid, static & server rendering )
+Dynamisches Routing
+API
+
+
+
+Instruktionen:
+
+Eine .env.local datei im Rootverzeichnis erstellen und ihr den Folgenden  Inhalt geben:
+NEXT_PUBLIC_MONGODB_URI=mongodb+srv://admin:admin@todopluscluster.iy1mmjt.mongodb.net/todoPlusDB?retryWrites=true&w=majority 
+
+Auf MongoDB Atlas gehen und sich mit folgenden Informationen anmelden 
+email: t.karsfeld@medicalvision.de 
+pass: sonedbjunge123!
+
+Dann in den Einstellungen zur datenbank die eigene IP-Adresse freigeben.
+
+Nun kann man sich in der App mit:
+name: user@user.de
+passwort: pass
+einloggegen
