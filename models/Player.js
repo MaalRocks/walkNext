@@ -7,6 +7,9 @@ const playerSchema = new mongoose.Schema(
 		name: {
 			type: String,
 		},
+		level: {
+			type: Number,
+		},
 		strength: {
 			type: Number,
 		},
@@ -14,6 +17,12 @@ const playerSchema = new mongoose.Schema(
 			type: Number,
 		},
 		intelligence: {
+			type: Number,
+		},
+		attack: {
+			type: Number,
+		},
+		defence: {
 			type: Number,
 		},
 		lp: {

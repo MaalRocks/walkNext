@@ -7,6 +7,15 @@ const enemySchema = new mongoose.Schema(
 		name: {
 			type: String,
 		},
+		level: {
+			type: Number,
+		},
+		attack: {
+			type: Number,
+		},
+		defence: {
+			type: Number,
+		},
 		lp: {
 			type: Number,
 		},

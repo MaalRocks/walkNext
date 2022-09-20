@@ -1,20 +1,22 @@
-const Enemy = ({ enemy, onClick, enemyId }) => {
+const Enemy = ({ enemy, onClick, index, className }) => {
 	return (
 		<div
 			onClick={onClick}
-			id={enemyId}
-			className="bg-red-500 bg-opacity-50"
+			id={index}
+			className={className}
 		>
 			<div className=" p-2">
-				<div id={enemyId}> {enemy.name} </div>
-				<div id={enemyId}> {enemyId} </div>
-				<div id={enemyId}>
+				<div id={index}>
+					{enemy.name} {enemy.isDead ? "dead" : ""}
+				</div>
+				<div id={index}> index im state: {index} </div>
+				<div id={index}>
 					LP: {enemy.lp} / {enemy.maxLp}
 				</div>
-				<div id={enemyId}>
+				<div id={index}>
 					MP: {enemy.mp} / {enemy.maxMp}
 				</div>
-				<div id={enemyId}>
+				<div id={index}>
 					EXP: {enemy.exp} / {enemy.maxExp}
 				</div>
 			</div>
