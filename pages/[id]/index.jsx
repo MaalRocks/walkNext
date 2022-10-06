@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import Player from "../../components/Player"
 import Enemy from "../../components/Enemy"
 import Log from "../../components/Logs/Log"
-import Target from "../../components/Target"
+import CurrentTarget from "../../components/CurrentTarget"
 
 // stateUpdate
 // // Array
@@ -26,7 +26,7 @@ import Target from "../../components/Target"
 const Dashboard = () => {
 	const [player, setPlayer] = useState({})
 	const [enemies, setEnemies] = useState([])
-	const [target, setTarget] = useState({})
+	const [enemyIndex, setEnemyIndex] = useState(null)
 	const [battleLog, setBattleLog] = useState([])
 	const [log, setLog] = useState([])
 	const [message, setMessage] = useState()
@@ -105,23 +105,19 @@ const Dashboard = () => {
 		- 5 Wenn enemy dran ist: führe angriff nach der reihenfolge aus die das enemiesArray vorgibt
 	*/
 
-	const getTarget = (event) => {
-		if (!event.target) return
-
-		const target = event.target
-		const enemyIndex = target.id
-
+	const getEnemyByIndex = (index) => {
+		if (!index) return console.log("getEnemyByIndex _ index nicht vorhanden")
 		// get enemy from state by index
-		const enemy = enemies[enemyIndex]
+		console.log("index: ", index)
+		console.log("getEnemyByIndex enemies[index]: ", enemies[index])
+		return enemies[index]
+	}
 
-		// write current index into targets index
-		enemy.index = Number.parseInt(enemyIndex)
+	const setTargetToButtonId = (event) => {
+		if (!event.target) return console.log("event.target nicht vorhanden")
 
-		// set target to
-		setTarget(enemy)
-
-		// write into generall log
-		writeToLog(`aktuelles Ziel: ${enemy.name}`)
+		const btnId = event.target.id
+		setEnemyIndex(btnId)
 	}
 
 	const isDead = (target) => {
@@ -214,12 +210,13 @@ const Dashboard = () => {
 								index={index}
 								enemy={enemy}
 								className={"bg-red-500 bg-opacity-50"}
-								onClick={getTarget}
+								onClick={setTargetToButtonId}
 							/>
 						))}
 					</div>
 
-					<div className="flex w-full justify-evenly">
+					{/* playerSide */}
+					<div className="flex w-full justify-evenly bg-blue-600">
 						<div className="bg-gray-500 bg-opacity-30 p-2">
 							<Player player={player} />
 							<div>Player turn: {isPlayerTurn.toString()}</div>
@@ -264,7 +261,10 @@ const Dashboard = () => {
 							</div>
 						</div>
 
-						<Target target={target} />
+						<CurrentTarget
+							enemyIndex={enemyIndex}
+							getEnemyByIndex={getEnemyByIndex}
+						/>
 
 						<Log log={log} />
 					</div>

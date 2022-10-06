@@ -10,6 +10,12 @@ const enemySchema = new mongoose.Schema(
 		level: {
 			type: Number,
 		},
+		eid: {
+			type: String,
+		},
+		spritePath: {
+			type: String,
+		},
 		attack: {
 			type: Number,
 		},

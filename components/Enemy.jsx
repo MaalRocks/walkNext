@@ -1,9 +1,12 @@
 import Image from "next/image"
-import banditSprite from "../assets/sprites/abc.jpg"
+import { useState } from "react"
+import defaultSprite from "../assets/sprites/abc.jpg"
 
 const spriteSize = "150"
 
 const Enemy = ({ enemy, onClick, index }) => {
+	if (enemy.spritePath === null) enemy.spritePath = defaultSprite
+
 	return (
 		<div className="bg-red-900 p-2 text-center">
 			<div>
@@ -11,7 +14,7 @@ const Enemy = ({ enemy, onClick, index }) => {
 			</div>
 			<div>
 				<Image
-					src={banditSprite}
+					src={enemy.spritePath}
 					width={spriteSize}
 					height={spriteSize}
 					layout="responsive"
