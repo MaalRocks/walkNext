@@ -1,9 +1,7 @@
 const CurrentTarget = ({ enemyIndex, getEnemyByIndex }) => {
-	if (!enemyIndex) return <div>asd</div>
+	if (!enemyIndex) return <div>Kein Gegner ausgewählt</div>
 
 	const currentTarget = getEnemyByIndex(enemyIndex)
-
-	console.log("currentTargets: ", currentTarget)
 
 	if (!currentTarget) {
 		return <div>Kein Ziel ausgewählt</div>
@@ -12,20 +10,12 @@ const CurrentTarget = ({ enemyIndex, getEnemyByIndex }) => {
 			<div className="break-word flex h-24 w-36 flex-col">
 				<div>Momentanes Ziel: </div>
 
-				<div>{currentTarget}</div>
-
 				<div className="flex flex-col items-center">
 					<div>{currentTarget.name}</div>
 					<div>
 						HP: {currentTarget.lp} / {currentTarget.maxLp}
 					</div>
 				</div>
-
-				{/* <div>
-					{Object.entries(currentTarget).map((entry, index) => (
-						<div key={index}>{`${entry[0]} : ${entry[1]}`}</div>
-					))}
-				</div> */}
 			</div>
 		)
 	}

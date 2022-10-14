@@ -108,8 +108,6 @@ const Dashboard = () => {
 	const getEnemyByIndex = (index) => {
 		if (!index) return console.log("getEnemyByIndex _ index nicht vorhanden")
 		// get enemy from state by index
-		console.log("index: ", index)
-		console.log("getEnemyByIndex enemies[index]: ", enemies[index])
 		return enemies[index]
 	}
 
@@ -147,8 +145,15 @@ const Dashboard = () => {
 	}
 
 	const handleAttack = () => {
-		if (!target) return writeToLog("Kein Ziel ausgewählt")
+		if (!enemyIndex) return writeToLog("Kein enemyIndex")
+
+		const target = getEnemyByIndex(enemyIndex)
+
 		if (target.lp <= 0) return writeToLog("Sinnlos")
+
+		const damage = calcDamage(player, target)
+
+		target.lp = target.lp - damage
 
 		// nicht das target bearbeiten sondern die position im enemysArray
 		// wenn man danach geht alles nur im enemysArray machen und

@@ -1,3 +1,5 @@
+import Statusbar from "./Statusbar"
+
 const Player = ({ player }) => {
 	return (
 		<div className="flex flex-col">
@@ -5,15 +7,26 @@ const Player = ({ player }) => {
 				{player.name} lvl {player.level}
 			</div>
 			<div className="m-1 flex flex-col items-center">
-				<div className="text-xl font-extrabold text-red-900">
-					LP: {player.lp} / {player.maxLp}
-				</div>
-				<div className="text-xl font-extrabold text-blue-900">
-					MP: {player.mp} / {player.maxMp}
-				</div>
-				<div className="text-xl font-extrabold text-green-900">
-					EXP: {player.exp} / {player.maxExp}
-				</div>
+				<Statusbar
+					valueName={"LP"}
+					value={player.lp}
+					maxValue={player.maxLp}
+					color="red"
+				/>
+
+				<Statusbar
+					valueName={"MP"}
+					value={player.mp}
+					maxValue={player.maxMp}
+					color="blue"
+				/>
+
+				<Statusbar
+					valueName={"EXP"}
+					value={player.exp}
+					maxValue={player.maxExp}
+					color="green"
+				/>
 			</div>
 			<div className="m-1 flex flex-col justify-evenly">
 				<div className="flex justify-evenly p-1">
